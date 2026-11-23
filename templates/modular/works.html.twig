@@ -1,0 +1,65 @@
+<section class="jn-section" id="works">
+    <div class="jn-container">
+        <div class="jn-section-header">
+            <div class="jn-section-title-group">
+                <span class="jn-index-pill">01</span>
+                <h2>
+                    {{ page.header.heading_bold|default('Selected Works &') }}
+                    <span class="jn-serif-italic">{{ page.header.heading_italic|default('Vibe Artifacts') }}</span>
+                </h2>
+            </div>
+
+            <div class="jn-filter-bar" role="group" aria-label="Filter projects">
+                <button type="button" class="jn-filter-btn active" data-filter="all">All</button>
+                {% for cat in page.header.categories %}
+                    <button type="button" class="jn-filter-btn" data-filter="{{ cat|lower|replace({' ': '-'}) }}">{{ cat }}</button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="jn-works-grid">
+            {% for work in page.header.projects %}
+            {% set wimg = page.media[work.image] %}
+            {% set cat_slug = work.category|lower|replace({' ': '-'}) %}
+            <article class="jn-card jn-work-card"
+                     data-category="{{ cat_slug }}"
+                     data-work-title="{{ work.title|e('html_attr') }}"
+                     data-work-cat="{{ work.category|e('html_attr') }}"
+                     data-work-year="{{ work.year|e('html_attr') }}"
+                     data-work-summary="{{ work.summary|e('html_attr') }}"
+                     data-work-prompt="{{ work.prompt|e('html_attr') }}"
+                     data-work-stack="{{ work.stack|join(', ')|e('html_attr') }}"
+                     data-work-img="{{ wimg ? wimg.url : '' }}">
+                <div class="jn-work-thumb">
+                    <span class="jn-reg-mark jn-reg-tl"></span>
+                    <span class="jn-reg-mark jn-reg-tr"></span>
+                    {% if wimg %}
+                        <img src="{{ wimg.url }}" alt="{{ work.title }}" loading="lazy" />
+                    {% endif %}
+                    <div class="jn-prompt-overlay">
+                        <span class="jn-mono jn-xs jn-cyan-text">VIBE PROMPT // {{ work.build_time }}</span>
+                        <p>{{ work.prompt }}</p>
+                    </div>
+                </div>
+
+                <div class="jn-work-body">
+                    <div class="jn-work-meta">
+                        <span class="jn-mono jn-xs jn-crimson-text">{{ work.code }} &middot; {{ work.category }}</span>
+                        <span class="jn-mono jn-xs jn-muted">{{ work.year }}</span>
+                    </div>
+                    <h3>{{ work.title }}</h3>
+                    <p class="jn-muted">{{ work.summary }}</p>
+                    <div class="jn-work-foot">
+                        <div class="jn-mini-tags">
+                            {% for t in work.stack %}
+                                <span>{{ t }}</span>
+                            {% endfor %}
+                        </div>
+                        <button type="button" class="jn-link-btn jn-open-work">Inspect &rarr;</button>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,51 @@
+name: Jakarta Noir
+slug: jakarta-noir
+type: theme
+version: 1.0.0
+description: Minimalist-clean modern bento portfolio and blogging theme for Creative Vibe Coders on Grav 2.0
+icon: terminal
+author:
+  name: Ikrima Baskoro
+  email: hello@ikrimabaskoro.my.id
+  url: https://ikrimabaskoro.my.id
+homepage: https://ikrimabaskoro.my.id
+keywords: grav, theme, jakarta-noir, bento, portfolio, blog, dark-mode, light-mode, vibe-coder
+bugs: https://github.com/araaaabbb/grav-theme-jakarta-noir/issues
+license: MIT
+compatibility:
+  grav:
+    - '1.7'
+    - '2.0'
+dependencies:
+  - { name: grav, version: ">=1.6.0" }
+
+form:
+  validation: loose
+  fields:
+    brand_title:
+      type: text
+      label: Navbar Brand Mark
+      default: 'Jakarta Noir'
+    default_mode:
+      type: select
+      label: Default Color Scheme
+      default: 'dark'
+      options:
+        dark: 'Obsidian Dark Mode'
+        light: 'Editorial Paper Light Mode'
+    accent_crimson:
+      type: colorpicker
+      label: Primary Accent (Space Crimson)
+      default: '#e11d48'
+    accent_cyan:
+      type: colorpicker
+      label: Secondary Accent (Electric Cyan)
+      default: '#22d3ee'
+    contact_email:
+      type: text
+      label: Contact Email Address
+      default: 'hello@ikrimabaskoro.my.id'
+    footer_spec:
+      type: text
+      label: Footer Modular Spec Badge
+      default: 'Grav 2.0 Modular: 06.jakarta-noir/modular.md → _hero · _works · _logs · _collaborate'

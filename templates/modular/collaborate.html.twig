@@ -1,0 +1,85 @@
+<section class="jn-section" id="collaborate">
+    <div class="jn-container">
+        <div class="jn-card jn-collab-banner">
+            <div class="jn-collab-grid">
+                <div class="jn-collab-left">
+                    <div class="jn-section-title-group">
+                        <span class="jn-index-pill">03</span>
+                        <span class="jn-mono jn-xs jn-cyan-text">COLLABORATE OR MORE // CONTACT ME</span>
+                    </div>
+
+                    <h2 class="jn-collab-heading">
+                        {{ page.header.heading_bold|default("Let's craft visual systems &") }}
+                        <span class="jn-serif-italic">{{ page.header.heading_italic|default('ship bold products.') }}</span>
+                    </h2>
+
+                    <p class="jn-muted jn-collab-copy">
+                        {{ page.header.description }}
+                    </p>
+
+                    <div class="jn-collab-pillars">
+                        {% for item in page.header.services %}
+                        <div class="jn-pillar-item">
+                            <span class="jn-mono jn-xs jn-crimson-text">{{ "%02d"|format(loop.index) }}</span>
+                            <div>
+                                <strong>{{ item.title }}</strong>
+                                <p class="jn-muted">{{ item.desc }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="jn-direct-contact-bar">
+                        <button type="button" class="jn-btn jn-btn-outline" id="jnCopyEmailBtn"
+                                data-email="{{ page.header.email|default('hello@ikrimabaskoro.my.id') }}">
+                            Copy Email: {{ page.header.email|default('hello@ikrimabaskoro.my.id') }}
+                        </button>
+                        <div class="jn-social-pills">
+                            {% for soc in page.header.socials %}
+                                <a href="{{ soc.url }}" target="_blank" rel="noopener" class="jn-social-pill">{{ soc.label }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jn-collab-right">
+                    <div class="jn-brief-box">
+                        <span class="jn-mono jn-xs jn-muted">DIRECT STUDIO DISPATCH</span>
+                        <h3>Send a Project Brief</h3>
+                        <form class="jn-form" id="jnContactForm">
+                            <div class="jn-form-grid-2">
+                                <div class="jn-field">
+                                    <label for="jnName">Your Name</label>
+                                    <input type="text" id="jnName" name="name" placeholder="e.g. Raka Pratama" required />
+                                </div>
+                                <div class="jn-field">
+                                    <label for="jnEmail">Email Address</label>
+                                    <input type="email" id="jnEmail" name="email" placeholder="you@studio.com" required />
+                                </div>
+                            </div>
+
+                            <div class="jn-field">
+                                <label for="jnScope">Collaboration Scope</label>
+                                <select id="jnScope" name="scope">
+                                    <option value="Brand Identity & Visual System">Brand Identity &amp; Visual System</option>
+                                    <option value="Vibe-Coded Web App / MVP">Vibe-Coded Web App / MVP</option>
+                                    <option value="Custom Grav CMS Theme">Custom Grav CMS Theme</option>
+                                    <option value="Creative Direction & Advisory">Creative Direction &amp; Advisory</option>
+                                </select>
+                            </div>
+
+                            <div class="jn-field">
+                                <label for="jnMessage">Project Notes &amp; Timeline</label>
+                                <textarea id="jnMessage" name="message" rows="4" placeholder="Tell me about what you are building, visual references, and target launch..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="jn-btn jn-btn-crimson jn-btn-full">
+                                Dispatch Brief &rarr;
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

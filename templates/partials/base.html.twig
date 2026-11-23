@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="{{ grav.language.getActive ?: 'en' }}" data-theme="{{ theme_config.default_mode|default('dark') }}">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if page.title %}{{ page.title|e('html') }} | {% endif %}{{ site.title|e('html') }}</title>
+    {% include 'partials/metadata.html.twig' ignore missing %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {% do assets.addCss('theme://css/jakarta-noir.css', 100) %}
+    {% do assets.addJs('theme://js/jakarta-noir.js', {'group': 'bottom'}) %}
+    {{ assets.css()|raw }}
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('jn-color-mode');
+                if (saved === 'light' || saved === 'dark') {
+                    document.documentElement.setAttribute('data-theme', saved);
+                }
+            } catch (e) {}
+        })();
+    </script>
+</head>
+<body class="{{ page.header.body_classes }}">
+    <div class="jn-ambient-glow" aria-hidden="true"></div>
+
+    <header class="jn-nav-wrap">
+        <nav class="jn-navbar" aria-label="Primary Navigation">
+            <a href="{{ base_url_relative ?: '/' }}" class="jn-brand">
+                <span class="jn-brand-dot"></span>
+                <span>{{ theme_config.brand_title|default('Jakarta Noir') }}</span>
+            </a>
+
+            <div class="jn-nav-links" id="jnNavLinks">
+                <a href="#works">Works</a>
+                <a href="#logs">Logs</a>
+                <a href="#collaborate">Collaborate</a>
+                {% for p in pages.children.visible %}
+                    {% if p.slug != 'jakarta-noir' %}
+                        <a href="{{ p.url }}" class="{{ (p.active or p.activeChild) ? 'active' : '' }}">{{ p.menu }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="jn-nav-controls">
+                <button type="button" class="jn-chip-btn" id="jnPromptToggle" aria-pressed="false" title="Toggle Vibe Prompt Specs">
+                    <span class="jn-chip-icon">&lt;/&gt;</span>
+                    <span class="jn-chip-label">Prompts</span>
+                </button>
+                <button type="button" class="jn-chip-btn" id="jnThemeToggle" aria-label="Toggle Light or Dark Mode" title="Switch Light / Dark Mode">
+                    <span id="jnThemeIcon">&#9789;</span>
+                    <span class="jn-chip-label" id="jnThemeText">Dark</span>
+                </button>
+                <button type="button" class="jn-mobile-btn" id="jnMobileBtn" aria-label="Open Menu">&#9776;</button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="top" class="jn-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="jn-footer">
+        <div class="jn-container">
+            <div class="jn-footer-card">
+                <div class="jn-footer-left">
+                    <div class="jn-brand">
+                        <span class="jn-brand-dot"></span>
+                        <span>{{ theme_config.brand_title|default('Jakarta Noir') }}</span>
+                    </div>
+                    <div class="jn-footer-links">
+                        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://x.com" target="_blank" rel="noopener">X / Twitter</a>
+                        <a href="https://read.cv" target="_blank" rel="noopener">Read.cv</a>
+                        <a href="#collaborate">Contact</a>
+                    </div>
+                </div>
+
+                <div class="jn-footer-spec-box">
+                    {{ theme_config.footer_spec|default('Grav 2.0 Modular: 06.jakarta-noir/modular.md → _hero · _works · _logs · _collaborate') }}
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Case Study & Markdown Article Reader -->
+    <div class="jn-modal-backdrop" id="jnModal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="jn-modal-panel">
+            <div class="jn-modal-head">
+                <span class="jn-mono jn-cyan-text" id="jnModalKicker">CASE STUDY // 01</span>
+                <button type="button" class="jn-modal-close" id="jnModalClose" aria-label="Close modal">&times; Close</button>
+            </div>
+            <div class="jn-modal-body" id="jnModalBody"></div>
+        </div>
+    </div>
+
+    <div class="jn-toast" id="jnToast" role="status" aria-live="polite"></div>
+    {{ assets.js('bottom')|raw }}
+</body>
+</html>

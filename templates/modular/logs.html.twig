@@ -1,0 +1,60 @@
+<section class="jn-section" id="logs">
+    <div class="jn-container">
+        <div class="jn-section-header">
+            <div class="jn-section-title-group">
+                <span class="jn-index-pill jn-index-cyan">02</span>
+                <h2>
+                    {{ page.header.heading_bold|default('Vibe Logs &') }}
+                    <span class="jn-serif-italic">{{ page.header.heading_italic|default('Editorial Notes') }}</span>
+                </h2>
+            </div>
+            <span class="jn-mono jn-xs jn-muted">{{ page.header.subtitle|default('Click entry to launch Markdown Reader') }}</span>
+        </div>
+
+        <div class="jn-logs-bento">
+            {% set featured = page.header.posts|first %}
+            {% if featured %}
+            <article class="jn-card jn-featured-log jn-open-log"
+                     tabindex="0"
+                     role="button"
+                     data-log-code="LOG_01"
+                     data-log-cat="{{ featured.category|e('html_attr') }}"
+                     data-log-date="{{ featured.date|e('html_attr') }}"
+                     data-log-title="{{ featured.title|e('html_attr') }}"
+                     data-log-meta="{{ featured.read_time|e('html_attr') }} · {{ featured.build_meta|e('html_attr') }}"
+                     data-log-body="{{ featured.body|e('html_attr') }}">
+                <span class="jn-featured-badge">FEATURED &middot; {{ featured.category }}</span>
+                <h3 class="jn-featured-log-title">{{ featured.title }}</h3>
+                <p class="jn-muted">{{ featured.excerpt }}</p>
+                <div class="jn-featured-log-foot">
+                    <span class="jn-mono jn-xs jn-muted">{{ featured.read_time }} &middot; {{ featured.build_meta }}</span>
+                    <span class="jn-mono jn-xs jn-cyan-text">Read Note &rarr;</span>
+                </div>
+            </article>
+            {% endif %}
+
+            <div class="jn-card jn-log-index-card">
+                {% for post in page.header.posts %}
+                {% set code = "LOG_%02d"|format(loop.index) %}
+                <article class="jn-log-row jn-open-log"
+                         tabindex="0"
+                         role="button"
+                         data-log-code="{{ code }}"
+                         data-log-cat="{{ post.category|e('html_attr') }}"
+                         data-log-date="{{ post.date|e('html_attr') }}"
+                         data-log-title="{{ post.title|e('html_attr') }}"
+                         data-log-meta="{{ post.read_time|e('html_attr') }} · {{ post.build_meta|e('html_attr') }}"
+                         data-log-body="{{ post.body|e('html_attr') }}">
+                    <div class="jn-log-row-meta">
+                        <span class="jn-mono jn-xs jn-crimson-text">{{ code }}</span>
+                        <span class="jn-mono jn-xs jn-muted">&middot;</span>
+                        <span class="jn-mono jn-xs jn-cyan-text">{{ post.category }}</span>
+                        <span class="jn-mono jn-xs jn-muted">&middot; {{ post.date }}</span>
+                    </div>
+                    <h4 class="jn-log-row-title">{{ post.title }}</h4>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

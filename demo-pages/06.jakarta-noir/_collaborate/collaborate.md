@@ -1,0 +1,25 @@
+---
+title: 'Collaborate'
+heading_bold: 'Let''s craft visual systems &'
+heading_italic: 'ship bold products.'
+description: 'Available for select brand direction, high-craft web interfaces, custom Grav CMS themes, and rapid AI-accelerated MVP sprints. Based in Jakarta, collaborating worldwide.'
+email: 'hello@ikrimabaskoro.my.id'
+services:
+  - title: 'Brand & Visual Direction'
+    desc: 'Cohesive visual identities, design systems, and anti-slop editorial art direction.'
+  - title: 'Vibe-Coded Web Apps'
+    desc: 'Interactive prototypes and production web apps shipped at rapid studio velocity.'
+  - title: 'Custom Grav CMS Themes'
+    desc: 'Bespoke flat-file Twig & YAML themes engineered for speed and effortless editing.'
+  - title: 'Creative Consulting'
+    desc: 'Design-to-code workflow audits and AI prompting systems for product teams.'
+socials:
+  - label: 'GitHub'
+    url: 'https://github.com'
+  - label: 'X / Twitter'
+    url: 'https://x.com'
+  - label: 'Read.cv'
+    url: 'https://read.cv'
+  - label: 'Behance'
+    url: 'https://behance.net'
+---

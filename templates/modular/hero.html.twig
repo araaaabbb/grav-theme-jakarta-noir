@@ -1,0 +1,124 @@
+<section class="jn-section jn-hero-section" id="hero">
+    <div class="jn-container">
+        <div class="jn-bento-grid">
+            <!-- Row 1 Left: Editorial Statement -->
+            <div class="jn-card jn-col-7 jn-hero-intro">
+                <div class="jn-hero-top-meta">
+                    <span class="jn-eyebrow">{{ page.header.eyebrow|default('CREATIVE VIBE CODER // JAKARTA') }}</span>
+                    <span class="jn-status-pill">
+                        <span class="jn-status-dot"></span>
+                        {{ page.header.status_text|default('OPEN FOR SELECT PROJECTS') }}
+                    </span>
+                </div>
+
+                <h1 class="jn-hero-title">
+                    {{ page.header.headline_start|default('Designing visual worlds &') }}
+                    <span class="jn-serif-italic">{{ page.header.headline_italic|default('shipping code') }}</span>
+                    {{ page.header.headline_end|default('at the speed of thought.') }}
+                </h1>
+
+                <div class="jn-hero-desc">
+                    {{ page.content|raw }}
+                </div>
+
+                <div class="jn-hero-actions">
+                    <a href="{{ page.header.primary_url|default('#works') }}" class="jn-btn jn-btn-crimson">
+                        {{ page.header.primary_text|default('Explore Selected Works') }}
+                    </a>
+                    <a href="{{ page.header.secondary_url|default('#collaborate') }}" class="jn-btn jn-btn-outline">
+                        {{ page.header.secondary_text|default('Collaborate') }}
+                    </a>
+                </div>
+            </div>
+
+            <!-- Row 1 Right: Featured Artwork Reel -->
+            <div class="jn-card jn-col-5 jn-reel-card">
+                <div class="jn-reel-header">
+                    <span class="jn-mono jn-xs jn-muted">FEATURED ARTWORK REEL</span>
+                    <div class="jn-reel-tabs" role="tablist">
+                        {% for item in page.header.reel %}
+                        <button type="button"
+                                class="jn-reel-tab {{ loop.first ? 'active' : '' }}"
+                                data-reel-idx="{{ loop.index0 }}">
+                            {{ "%02d"|format(loop.index) }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="jn-reel-stage">
+                    {% for item in page.header.reel %}
+                    {% set rimg = page.media[item.image] %}
+                    <div class="jn-reel-slide {{ loop.first ? 'active' : '' }}" data-reel-slide="{{ loop.index0 }}">
+                        <div class="jn-reel-media">
+                            {% if rimg %}
+                                <img src="{{ rimg.url }}" alt="{{ item.title }}" />
+                            {% endif %}
+                            <div class="jn-prompt-overlay">
+                                <span class="jn-mono jn-xs jn-cyan-text">PROMPT // {{ item.model }}</span>
+                                <p>{{ item.prompt }}</p>
+                            </div>
+                        </div>
+                        <div class="jn-reel-caption">
+                            <div>
+                                <strong>{{ item.title }}</strong>
+                                <span class="jn-muted">{{ item.category }}</span>
+                            </div>
+                            <span class="jn-mono jn-xs jn-badge-cyan">{{ item.build_time }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Row 2 Left: ABOUT // DUAL DISCIPLINE (Moved into Hero/Reel group per spec) -->
+            <div class="jn-card jn-col-6 jn-discipline-card">
+                <div class="jn-card-kicker-row">
+                    <span class="jn-mono jn-xs jn-crimson-text">ABOUT // DUAL DISCIPLINE</span>
+                    <span class="jn-mono jn-xs jn-muted">10+ YRS DESIGN &middot; 6+ YRS DEV</span>
+                </div>
+                <h2 class="jn-card-heading">
+                    {{ page.header.about_title_bold|default('Graphic designer eye,') }}
+                    <span class="jn-serif-italic">{{ page.header.about_title_italic|default('vibe-coder velocity.') }}</span>
+                </h2>
+                <p class="jn-muted jn-card-body-text">
+                    {{ page.header.about_summary }}
+                </p>
+                <div class="jn-mini-metrics">
+                    {% for m in page.header.about_metrics %}
+                    <div class="jn-metric-pill">
+                        <strong>{{ m.value }}</strong>
+                        <span>{{ m.label }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Row 2 Right: CORE CREATIVE & VIBE STACK (Moved into Hero/Reel group per spec) -->
+            <div class="jn-card jn-col-6 jn-stack-card">
+                <div class="jn-card-kicker-row">
+                    <span class="jn-mono jn-xs jn-cyan-text">CORE CREATIVE &amp; VIBE STACK</span>
+                    <span class="jn-mono jn-xs jn-muted">ANTI-SLOP WORKFLOW</span>
+                </div>
+                <div class="jn-stack-split">
+                    <div class="jn-stack-col">
+                        <h3>Visual &amp; Design Direction</h3>
+                        <ul class="jn-tag-list">
+                            {% for tag in page.header.design_stack %}
+                                <li>{{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="jn-stack-col">
+                        <h3>Vibe Coding &amp; Stack</h3>
+                        <ul class="jn-tag-list">
+                            {% for tag in page.header.dev_stack %}
+                                <li>{{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

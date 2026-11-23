@@ -1,0 +1,18 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block content %}
+<section class="jn-section">
+    <div class="jn-container">
+        <article class="jn-card jn-article-page">
+            <span class="jn-eyebrow">{{ page.header.category|default('EDITORIAL NOTE') }}</span>
+            <h1 class="jn-page-title">{{ page.title }}</h1>
+            {% if page.header.subtitle %}
+                <p class="jn-lead">{{ page.header.subtitle }}</p>
+            {% endif %}
+            <div class="jn-prose">
+                {{ page.content|raw }}
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}
