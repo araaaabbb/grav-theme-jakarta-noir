@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeText = document.getElementById('jnThemeText');
 
     function syncThemeUI(mode) {
-        if (themeIcon) themeIcon.innerHTML = mode === 'light' ? '&#9728;' : '&#9789;';
+        if (themeIcon) themeIcon.textContent = mode === 'light' ? '\u2600' : '\u263D';
         if (themeText) themeText.textContent = mode === 'light' ? 'Light' : 'Dark';
     }
     syncThemeUI(htmlEl.getAttribute('data-theme') || 'dark');
@@ -84,16 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 6. Modal Reader (Works Case Study & Vibe Logs)
+    // 6. Modal Reader (Works Case Study & Vibe Logs — built safely via DOM/textContent)
     const modal = document.getElementById('jnModal');
     const modalKicker = document.getElementById('jnModalKicker');
     const modalBody = document.getElementById('jnModalBody');
     const modalClose = document.getElementById('jnModalClose');
 
-    function openModal(kicker, htmlContent) {
+    function openModal(kicker, contentFragment) {
         if (!modal || !modalBody) return;
         if (modalKicker) modalKicker.textContent = kicker;
-        modalBody.innerHTML = htmlContent;
+        modalBody.replaceChildren(contentFragment);
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
     }
@@ -118,43 +118,83 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const card = btn.closest('.jn-work-card');
             if (!card) return;
-            const title = card.getAttribute('data-work-title');
-            const cat = card.getAttribute('data-work-cat');
-            const year = card.getAttribute('data-work-year');
-            const summary = card.getAttribute('data-work-summary');
-            const prompt = card.getAttribute('data-work-prompt');
-            const stack = card.getAttribute('data-work-stack');
-            const img = card.getAttribute('data-work-img');
+            const title = card.getAttribute('data-work-title') || '';
+            const cat = card.getAttribute('data-work-cat') || '';
+            const year = card.getAttribute('data-work-year') || '';
+            const summary = card.getAttribute('data-work-summary') || '';
+            const prompt = card.getAttribute('data-work-prompt') || '';
+            const stack = card.getAttribute('data-work-stack') || '';
+            const img = card.getAttribute('data-work-img') || '';
 
-            const imgHtml = img ? `<img src="${img}" alt="${title}" />` : '';
-            openModal(`${cat.toUpperCase()} // ${year}`, `
-                ${imgHtml}
-                <h2>${title}</h2>
-                <p class="jn-muted" style="margin-bottom:0.85rem;">${summary}</p>
-                <div class="jn-modal-prompt-box">
-                    <strong class="jn-cyan-text">VIBE PROMPT ARCHITECTURE:</strong><br/>
-                    ${prompt}
-                </div>
-                <p class="jn-mono jn-xs jn-muted">STACK: ${stack}</p>
-            `);
+            const frag = document.createDocumentFragment();
+
+            if (img) {
+                const imgEl = document.createElement('img');
+                imgEl.src = img;
+                imgEl.alt = title;
+                frag.appendChild(imgEl);
+            }
+
+            const heading = document.createElement('h2');
+            heading.textContent = title;
+            frag.appendChild(heading);
+
+            const summaryEl = document.createElement('p');
+            summaryEl.className = 'jn-muted';
+            summaryEl.style.marginBottom = '0.85rem';
+            summaryEl.textContent = summary;
+            frag.appendChild(summaryEl);
+
+            const promptBox = document.createElement('div');
+            promptBox.className = 'jn-modal-prompt-box';
+            const promptLabel = document.createElement('strong');
+            promptLabel.className = 'jn-cyan-text';
+            promptLabel.textContent = 'VIBE PROMPT ARCHITECTURE:';
+            promptBox.appendChild(promptLabel);
+            promptBox.appendChild(document.createElement('br'));
+            promptBox.appendChild(document.createTextNode(prompt));
+            frag.appendChild(promptBox);
+
+            const stackEl = document.createElement('p');
+            stackEl.className = 'jn-mono jn-xs jn-muted';
+            stackEl.textContent = `STACK: ${stack}`;
+            frag.appendChild(stackEl);
+
+            openModal(`${cat.toUpperCase()} // ${year}`, frag);
         });
     });
 
     document.querySelectorAll('.jn-open-log').forEach(row => {
         const trigger = () => {
-            const code = row.getAttribute('data-log-code');
-            const cat = row.getAttribute('data-log-cat');
-            const date = row.getAttribute('data-log-date');
-            const title = row.getAttribute('data-log-title');
-            const meta = row.getAttribute('data-log-meta');
-            const body = row.getAttribute('data-log-body');
+            const code = row.getAttribute('data-log-code') || '';
+            const cat = row.getAttribute('data-log-cat') || '';
+            const date = row.getAttribute('data-log-date') || '';
+            const title = row.getAttribute('data-log-title') || '';
+            const meta = row.getAttribute('data-log-meta') || '';
+            const body = row.getAttribute('data-log-body') || '';
 
-            const paragraphs = body.split('\n\n').map(p => `<p style="margin-bottom:0.9rem;">${p}</p>`).join('');
-            openModal(`${code} · ${cat.toUpperCase()} · ${date}`, `
-                <h2>${title}</h2>
-                <p class="jn-mono jn-xs jn-cyan-text" style="margin-bottom:1.15rem;">${meta}</p>
-                <div>${paragraphs}</div>
-            `);
+            const frag = document.createDocumentFragment();
+
+            const heading = document.createElement('h2');
+            heading.textContent = title;
+            frag.appendChild(heading);
+
+            const metaEl = document.createElement('p');
+            metaEl.className = 'jn-mono jn-xs jn-cyan-text';
+            metaEl.style.marginBottom = '1.15rem';
+            metaEl.textContent = meta;
+            frag.appendChild(metaEl);
+
+            const bodyWrap = document.createElement('div');
+            body.split('\n\n').forEach(paragraphText => {
+                const p = document.createElement('p');
+                p.style.marginBottom = '0.9rem';
+                p.textContent = paragraphText;
+                bodyWrap.appendChild(p);
+            });
+            frag.appendChild(bodyWrap);
+
+            openModal(`${code} · ${cat.toUpperCase()} · ${date}`, frag);
         };
         row.addEventListener('click', trigger);
         row.addEventListener('keydown', (e) => {
@@ -165,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 7. Copy Email & Brief Form
+    // 7. Copy Email
     const copyBtn = document.getElementById('jnCopyEmailBtn');
     if (copyBtn) {
         copyBtn.addEventListener('click', () => {
@@ -174,21 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 navigator.clipboard.writeText(email).then(() => {
                     showToast(`Copied ${email} to clipboard`);
                 });
-            } else {
+            } else if (email) {
                 showToast(`Email: ${email}`);
             }
-        });
-    }
-
-    const contactForm = document.getElementById('jnContactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const fd = new FormData(contactForm);
-            const name = fd.get('name') || 'Partner';
-            const scope = fd.get('scope') || 'Project';
-            showToast(`Brief received from ${name} (${scope}).`);
-            contactForm.reset();
         });
     }
 });

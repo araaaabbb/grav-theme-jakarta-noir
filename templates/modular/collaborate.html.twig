@@ -1,3 +1,4 @@
+{% set contact_email = page.header.email ?: theme_config.contact_email %}
 <section class="jn-section" id="collaborate">
     <div class="jn-container">
         <div class="jn-card jn-collab-banner">
@@ -29,54 +30,43 @@
                         {% endfor %}
                     </div>
 
+                    {% if contact_email or page.header.socials %}
                     <div class="jn-direct-contact-bar">
+                        {% if contact_email %}
                         <button type="button" class="jn-btn jn-btn-outline" id="jnCopyEmailBtn"
-                                data-email="{{ page.header.email|default('hello@ikrimabaskoro.my.id') }}">
-                            Copy Email: {{ page.header.email|default('hello@ikrimabaskoro.my.id') }}
+                                data-email="{{ contact_email|e('html_attr') }}">
+                            Copy Email: {{ contact_email }}
                         </button>
+                        {% endif %}
+                        {% if page.header.socials %}
                         <div class="jn-social-pills">
                             {% for soc in page.header.socials %}
-                                <a href="{{ soc.url }}" target="_blank" rel="noopener" class="jn-social-pill">{{ soc.label }}</a>
+                                <a href="{{ soc.url|e('html_attr') }}" target="_blank" rel="noopener" class="jn-social-pill">{{ soc.label }}</a>
                             {% endfor %}
                         </div>
+                        {% endif %}
                     </div>
+                    {% endif %}
                 </div>
 
                 <div class="jn-collab-right">
                     <div class="jn-brief-box">
                         <span class="jn-mono jn-xs jn-muted">DIRECT STUDIO DISPATCH</span>
                         <h3>Send a Project Brief</h3>
-                        <form class="jn-form" id="jnContactForm">
-                            <div class="jn-form-grid-2">
-                                <div class="jn-field">
-                                    <label for="jnName">Your Name</label>
-                                    <input type="text" id="jnName" name="name" placeholder="e.g. Raka Pratama" required />
-                                </div>
-                                <div class="jn-field">
-                                    <label for="jnEmail">Email Address</label>
-                                    <input type="email" id="jnEmail" name="email" placeholder="you@studio.com" required />
-                                </div>
-                            </div>
-
-                            <div class="jn-field">
-                                <label for="jnScope">Collaboration Scope</label>
-                                <select id="jnScope" name="scope">
-                                    <option value="Brand Identity & Visual System">Brand Identity &amp; Visual System</option>
-                                    <option value="Vibe-Coded Web App / MVP">Vibe-Coded Web App / MVP</option>
-                                    <option value="Custom Grav CMS Theme">Custom Grav CMS Theme</option>
-                                    <option value="Creative Direction & Advisory">Creative Direction &amp; Advisory</option>
-                                </select>
-                            </div>
-
-                            <div class="jn-field">
-                                <label for="jnMessage">Project Notes &amp; Timeline</label>
-                                <textarea id="jnMessage" name="message" rows="4" placeholder="Tell me about what you are building, visual references, and target launch..." required></textarea>
-                            </div>
-
-                            <button type="submit" class="jn-btn jn-btn-crimson jn-btn-full">
-                                Dispatch Brief &rarr;
-                            </button>
-                        </form>
+                        {% if config.plugins.form.enabled and page.header.form %}
+                            {% include "forms/form.html.twig" %}
+                        {% elseif contact_email %}
+                            <p class="jn-muted jn-collab-copy">
+                                Ready to collaborate? Send your project scope, references, and target timeline directly via email.
+                            </p>
+                            <a href="mailto:{{ contact_email|e('url') }}?subject={{ 'Project Brief'|url_encode }}" class="jn-btn jn-btn-crimson jn-btn-full">
+                                Send a Project Brief &rarr;
+                            </a>
+                        {% else %}
+                            <p class="jn-muted">
+                                Enable the Grav <code>Form</code> plugin or set a contact email in theme settings to activate project inquiries.
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

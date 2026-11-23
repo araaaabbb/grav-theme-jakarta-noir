@@ -3,5 +3,6 @@ brand_title: 'Jakarta Noir'
 default_mode: 'dark'
 accent_crimson: '#e11d48'
 accent_cyan: '#22d3ee'
-contact_email: 'hello@ikrimabaskoro.my.id'
-footer_spec: 'Grav 2.0 Modular: 06.jakarta-noir/modular.md → _hero · _works · _logs · _collaborate'
+contact_email: ''
+footer_text: ''
+footer_socials: []

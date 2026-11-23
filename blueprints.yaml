@@ -1,7 +1,7 @@
 name: Jakarta Noir
 slug: jakarta-noir
 type: theme
-version: 1.0.0
+version: 1.0.1
 description: Minimalist-clean modern bento portfolio and blogging theme for Creative Vibe Coders on Grav 2.0
 icon: terminal
 author:
@@ -17,7 +17,7 @@ compatibility:
     - '1.7'
     - '2.0'
 dependencies:
-  - { name: grav, version: ">=1.6.0" }
+  - { name: grav, version: ">=1.7.0" }
 
 form:
   validation: loose
@@ -44,8 +44,24 @@ form:
     contact_email:
       type: text
       label: Contact Email Address
-      default: 'hello@ikrimabaskoro.my.id'
-    footer_spec:
+      default: ''
+      placeholder: 'you@yourdomain.com'
+    footer_text:
       type: text
-      label: Footer Modular Spec Badge
-      default: 'Grav 2.0 Modular: 06.jakarta-noir/modular.md → _hero · _works · _logs · _collaborate'
+      label: Footer Note / Tagline
+      default: ''
+      placeholder: 'Optional footer note or copyright'
+    footer_socials:
+      type: list
+      label: Footer Social Links
+      style: vertical
+      default: []
+      fields:
+        .label:
+          type: text
+          label: Link Label
+          placeholder: 'e.g. GitHub'
+        .url:
+          type: url
+          label: Link URL
+          placeholder: 'https://github.com/username'
