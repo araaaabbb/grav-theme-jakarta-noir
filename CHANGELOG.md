@@ -1,3 +1,9 @@
+# v1.0.2
+## 11/28/2026
+
+1. [](#improved)
+    * Updated repository `homepage` and `bugs` URLs in `blueprints.yaml` and documentation to `https://github.com/ikrimabaskoro/grav-theme-jakarta-noir`.
+
 # v1.0.1
 ## 11/24/2026
 

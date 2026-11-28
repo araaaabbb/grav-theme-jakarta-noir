@@ -1,7 +1,7 @@
 name: Jakarta Noir
 slug: jakarta-noir
 type: theme
-version: 1.0.1
+version: 1.0.2
 description: Minimalist-clean modern bento portfolio and blogging theme for Creative Vibe Coders on Grav 2.0
 icon: terminal
 author:
@@ -10,7 +10,7 @@ author:
   url: https://ikrimabaskoro.my.id
 homepage: https://ikrimabaskoro.my.id
 keywords: grav, theme, jakarta-noir, bento, portfolio, blog, dark-mode, light-mode, vibe-coder
-bugs: https://github.com/araaaabbb/grav-theme-jakarta-noir/issues
+bugs: https://github.com/ikrimabaskoro/grav-theme-jakarta-noir/issues
 license: MIT
 compatibility:
   grav:
